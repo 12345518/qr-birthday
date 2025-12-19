@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Processing...</title>
+<style>
+body {
+  margin: 0;
+  font-family: monospace;
+  background: black;
+  color: #00ff9c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+.container {
+  max-width: 90%;
+}
+.big {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 20px;
+}
+.cursor::after {
+  content: "|";
+  animation: blink 1s infinite;
+}
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}
+.hidden {
+  display: none;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div id="text" class="cursor"></div>
+
+  <div id="final" class="hidden">
+    <div class="big">Zia Fatima</div>
+    <p>🎂 Birthday: 19 December</p>
+    <p style="margin-top:20px;">🎉 Happy Birthday Zia!</p>
+    <p style="margin-top:15px; font-size:0.9rem;">
+      Relax 😄 this was just a fun surprise.
+    </p>
+  </div>
+</div>
+
+<script>
+const messages = [
+  "Scanning QR code...",
+  "Accessing database...",
+  "Verifying identity...",
+  "Match found ✔",
+  "Preparing reveal..."
+];
+
+let msgIndex = 0;
+let charIndex = 0;
+const textDiv = document.getElementById("text");
+
+function typeMessage() {
+  if (charIndex < messages[msgIndex].length) {
+    textDiv.textContent += messages[msgIndex].charAt(charIndex);
+    charIndex++;
+    setTimeout(typeMessage, 60);
+  } else {
+    setTimeout(() => {
+      textDiv.textContent = "";
+      charIndex = 0;
+      msgIndex++;
+      if (msgIndex < messages.length) {
+        typeMessage();
+      } else {
+        textDiv.classList.add("hidden");
+        document.getElementById("final").classList.remove("hidden");
+      }
+    }, 900);
+  }
+}
+
+typeMessage();
+</script>
+
+</body>
+</html>
